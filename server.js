@@ -22,8 +22,12 @@ var postsModel = require("./schema.js")
 //Get /posts
 server.get( "/posts", function (req, res) {
     postsModel.find().then(function(posts){
+        var reversed_list = [];
+        posts.forEach(function(post) {
+            reversed_list.unshift(post);
+        });
         var response = {
-            posts: posts
+            posts: reversed_list
         };
         res.json( response);
     }).catch(function(error) {
