@@ -85,6 +85,20 @@ server.post( "/posts", function( req, res) {
     // }
 });
 
+//Delete /posts/id
+server.delete("/posts/:id", function(req, res) {
+    postsModel.findByIdAndDelete(req.params.id).then(function() {
+        res.status(204);
+        res.send( );
+    }).catch(function(error) {
+        var response = {
+                msg: error.message
+        };
+            res.status( 400 );
+            res.json( response );
+    });
+});
+
 
 
 mongoose.connect("mongodb+srv://exoticdolphin:coral69@mydatabase-thqf4.mongodb.net/test?retryWrites=true&w=majority", {
