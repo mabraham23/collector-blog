@@ -85,6 +85,44 @@ server.post( "/posts", function( req, res) {
     // }
 });
 
+//Update /posts
+server.put("/posts/:id", function(req, res) {
+    postsModel.findById(req.params.id).then(function(post) {
+        if( post == null ) {
+            res.status(404);
+            res.json({
+                msg: `There is no song with the id of ${req.params.id}`
+            });
+        } else {
+            if (req.body.title != undefined) {
+                post.title = req.body.title;
+            }
+            if (req.body.author != undefined) {
+                post.author = req.body.author;
+            }
+            if (req.body.category != undefined) {
+                post.category = req.body.category;
+            }
+            if (req.body.image != undefined) {
+                post.image = req.body.image;
+            }
+            if (req.body.text != undefined) {
+                post.text = req.body.text;
+            }
+
+            post.save().then(function() {
+                res.status(200);
+                res.json({
+                    post: post
+                });
+            });
+        }
+    }).catch(function(error) {
+        res.status(400).json({msg: error.message});
+    })
+}); 
+
+
 //Delete /posts/id
 server.delete("/posts/:id", function(req, res) {
     postsModel.findByIdAndDelete(req.params.id).then(function() {
