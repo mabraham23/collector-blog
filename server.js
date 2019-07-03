@@ -45,13 +45,6 @@ server.get( "/posts", function (req, res) {
 
 //Post /posts
 server.post( "/posts", function( req, res) {
-    // if ( req.body.title == undefined ) {
-    //     //user did not send a title for their post
-    //     var response = {
-    //         msg: "Please enter a title name"
-    //     };
-    // } else {
-        //Add the new post to the list of posts
         postsModel.create({
             title: req.body.title,
             author: req.body.author,
@@ -59,7 +52,6 @@ server.post( "/posts", function( req, res) {
             // skip the date field
             image: req.body.image,
             text: req.body.text
-
         }).then(function(new_post) {
             res.status(201);
             res.json(new_post);
@@ -71,18 +63,6 @@ server.post( "/posts", function( req, res) {
             res.json( response );
             //if anything went wrong above, we will catch the error
         });
-    //     var new_post = {
-    //         title: req.body.title,
-    //         author: req.body.author,
-    //         category: req.body.category,
-    //         date: req.body.date,
-    //         image: req.body.image,
-    //         text: req.body.text
-    //     };
-    //     data.posts.push( new_post )
-    //     res.status( 201 );
-    //     res.json( new_post );
-    // }
 });
 
 //Update /posts
@@ -91,7 +71,7 @@ server.put("/posts/:id", function(req, res) {
         if( post == null ) {
             res.status(404);
             res.json({
-                msg: `There is no song with the id of ${req.params.id}`
+                msg: `There is no post with the id of ${req.params.id}`
             });
         } else {
             if (req.body.title != undefined) {
